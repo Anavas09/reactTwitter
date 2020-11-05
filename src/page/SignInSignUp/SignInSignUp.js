@@ -9,11 +9,12 @@ import RightComponent from './RightComponent';
 import "./SignInSignUp.scss";
 
 function SignInSignUp() {
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState(null);
 
-  const openModal = () => {
+  const openModal = content => {
     setShowModal(true)
+    setModalContent(content)
   }
   
   return (
@@ -21,11 +22,11 @@ function SignInSignUp() {
       <Container className="signin-signup" fluid>
         <Row>
           <LeftComponent />
-          <RightComponent open={openModal}/>
+          <RightComponent openModal={openModal} setShowModal={setShowModal}/>
         </Row>
       </Container>
       <BasicModal show={showModal} setShow={setShowModal}>
-        <div><h2>Modal Content</h2></div>
+        {modalContent}
       </BasicModal>
     </>
   );

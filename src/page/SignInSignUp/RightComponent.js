@@ -1,25 +1,44 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Col } from "react-bootstrap";
 
-import LogoWhite from '../../assets/png/logo-white.png';
+import SingUpForm from "../../components/Forms/SingUpForm";
 
-function RightComponent({open}) {
+import LogoWhite from "../../assets/png/logo-white.png";
+
+function RightComponent({ openModal, setShowModal }) {
   return (
     <Col className="signin-signup__right" xs={6}>
       <div>
-      <img src={LogoWhite} alt="GoTwitterRight" />
+        <img src={LogoWhite} alt="GoTwitterRight" />
         <h2>
-          <FontAwesomeIcon icon="search" /> Mira lo que esta pasando en el mundo en este momento
+          <FontAwesomeIcon icon="search" /> Mira lo que esta pasando en el mundo
+          en este momento
         </h2>
         <h3>
           <FontAwesomeIcon icon="users" /> Unete a Twitter hoy mismo
         </h3>
-        <Button onClick={() => open()} variant="primary">Sign Up</Button>
-        <Button variant="outline-primary">Login</Button>
+        <Button
+          onClick={() => openModal(<SingUpForm setShowModal={setShowModal} />)}
+          variant="primary"
+        >
+          Sign Up
+        </Button>
+        <Button
+          onClick={() => openModal(<h2>Formulario de Login</h2>)}
+          variant="outline-primary"
+        >
+          Login
+        </Button>
       </div>
     </Col>
   );
 }
+
+RightComponent.propTypes = {
+  openModal: PropTypes.func.isRequired,
+  setShowModal: PropTypes.func.isRequired,
+};
 
 export default RightComponent;
