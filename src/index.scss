@@ -37,3 +37,17 @@ code {
     background-color: rgba(29, 261, 241, 0.1) !important;
   }
 }
+
+input.form-control, textarea.form-control {
+  background-color: $background-dark-light;
+  border: 0;
+  border-radius: 0;
+  border-bottom: 1px solid $border-gray;
+  color: $font-light !important;
+
+  &:focus {
+    background-color: $background-dark-light;
+    border-bottom: 1px solid $border-primary;
+    box-shadow: none;
+  }
+}

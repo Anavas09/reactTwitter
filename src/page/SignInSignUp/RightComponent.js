@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Col } from "react-bootstrap";
 
-import SingUpForm from "../../components/Forms/SingUpForm";
+import SignUpForm from "../../components/Forms/SignUpForm";
 
 import LogoWhite from "../../assets/png/logo-white.png";
 
@@ -20,7 +20,7 @@ function RightComponent({ openModal, setShowModal }) {
           <FontAwesomeIcon icon="users" /> Unete a Twitter hoy mismo
         </h3>
         <Button
-          onClick={() => openModal(<SingUpForm setShowModal={setShowModal} />)}
+          onClick={() => openModal(<SignUpForm setShowModal={setShowModal} />)}
           variant="primary"
         >
           Sign Up

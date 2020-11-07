@@ -5,6 +5,7 @@ import reportWebVitals from './reportWebVitals';
 
 import './fontawesome';
 
+import 'react-toastify/dist/ReactToastify.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.scss';
 
