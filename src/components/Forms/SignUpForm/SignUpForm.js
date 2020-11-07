@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, Col, Form, Row, Spinner } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { size, values } from "lodash";
 
 import { isEmailValid } from "../../../utils/validations";
+import { signUpApi } from "../../../api/signUp";
 
 import "./SignUpForm.scss";
 
@@ -18,6 +19,7 @@ const initialValues = {
 
 function SingUpForm({ setShowModal }) {
   const [formData, setFormData] = useState(initialValues);
+  const [signUpLoading, setSignUpLoading] = useState(false);
 
   /*This only work with input forms. If we have a select, checkbox, etc. We need an onChange on every field */
   const handleOnChange = e => {
@@ -46,7 +48,24 @@ function SingUpForm({ setShowModal }) {
       } else if (size(formData.password) < 6) {
         toast.warn("Password must be at least 6 characters");
       } else {
+        setSignUpLoading(true);
         toast.success("Signing...!");
+        signUpApi(formData)
+          .then(response => {
+            if (response.code) {
+              toast.warn(response.message);
+            } else {
+              toast.success("Signup Succesfully");
+              setShowModal(false);
+              setFormData(initialValues);
+            }
+          })
+          .catch(() => {
+            toast.error("Server error. Try again later");
+          })
+          .finally(() => {
+            setSignUpLoading(false);
+          });
       }
     }
   };
@@ -105,7 +124,7 @@ function SingUpForm({ setShowModal }) {
           </Row>
         </Form.Group>
         <Button variant="primary" type="submit">
-          Sign Up
+          {!signUpLoading ? "Sign Up" : <Spinner animation="border" />}
         </Button>
       </Form>
     </div>
