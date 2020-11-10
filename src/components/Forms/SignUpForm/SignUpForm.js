@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { size, values } from "lodash";
 
 import { isEmailValid } from "../../../utils/validations";
-import { signUpApi } from "../../../api/signUp";
+import { signUpApi } from "../../../api/auth";
 
 import "./SignUpForm.scss";
 
@@ -28,7 +28,7 @@ function SingUpForm({ setShowModal }) {
 
   const handleOnSubmit = e => {
     e.preventDefault();
-    //setShowModal(false);
+
     let validCount = 0;
 
     values(formData).some(value => {

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Col } from "react-bootstrap";
 
-import SingInForm from "../../components/Forms/SignInForm/SingInForm";
+import SingInForm from "../../components/Forms/SignInForm";
 import SignUpForm from "../../components/Forms/SignUpForm";
 
 import LogoWhite from "../../assets/png/logo-white.png";
