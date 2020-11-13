@@ -10,14 +10,13 @@ function LeftComponent() {
       <img src={Logo} alt="GoTwitterLeft" />
       <div>
         <h2>
-          <FontAwesomeIcon icon="search" /> Sigue lo que te interesa
+          <FontAwesomeIcon icon="search" /> Follow your interests.
         </h2>
         <h2>
-          <FontAwesomeIcon icon="users" /> Enterate de lo que esta hablando la
-          gente
+          <FontAwesomeIcon icon="users" /> Hear what people are talking about.
         </h2>
         <h2>
-          <FontAwesomeIcon icon="comment" /> Unete a la conversacion
+          <FontAwesomeIcon icon="comment" /> Join the conversation.
         </h2>
       </div>
     </Col>

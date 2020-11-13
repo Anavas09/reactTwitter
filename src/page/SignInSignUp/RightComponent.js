@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Col } from "react-bootstrap";
 
 import SingInForm from "../../components/Forms/SignInForm";
@@ -13,24 +12,19 @@ function RightComponent({ openModal, setShowModal }) {
     <Col className="signin-signup__right" xs={6}>
       <div>
         <img src={LogoWhite} alt="GoTwitterRight" />
-        <h2>
-          <FontAwesomeIcon icon="search" /> Mira lo que esta pasando en el mundo
-          en este momento
-        </h2>
-        <h3>
-          <FontAwesomeIcon icon="users" /> Unete a Twitter hoy mismo
-        </h3>
+        <h2>See what’s happening in the world right now</h2>
+        <h3>Join Twitter today.</h3>
         <Button
           onClick={() => openModal(<SignUpForm setShowModal={setShowModal} />)}
           variant="primary"
         >
-          Sign Up
+          Sign up
         </Button>
         <Button
           onClick={() => openModal(<SingInForm />)}
           variant="outline-primary"
         >
-          Login
+          Log in
         </Button>
       </div>
     </Col>

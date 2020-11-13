@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import React, { useContext, useState } from "react";
 import { Button, Form, Spinner } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { size, values } from "lodash";
@@ -8,6 +7,7 @@ import { isEmailValid } from "../../../utils/validations";
 
 import "./SingInForm.scss";
 import { setTokenApi, signInApi } from "../../../api/auth";
+import { AuthContext } from "../../../context/contexts";
 
 const initialValues = {
   email: "",
@@ -17,6 +17,8 @@ const initialValues = {
 function SingInForm() {
   const [formData, setFormData] = useState(initialValues);
   const [signUpLoading, setSignUpLoading] = useState(false);
+
+  const { setRefreshCheckLogin } = useContext(AuthContext);
 
   /*This only work with input forms. If we have a select, checkbox, etc. We need an onChange on every field */
   const handleOnChange = e => {
@@ -54,6 +56,7 @@ function SingInForm() {
               setTokenApi(response.token)
               console.log(response);
               setFormData(initialValues);
+              setRefreshCheckLogin(true)
             }
           })
           .catch(() => {
@@ -83,9 +86,5 @@ function SingInForm() {
     </div>
   );
 }
-
-SingInForm.propTypes = {
-  prop: PropTypes,
-};
 
 export default SingInForm;
