@@ -5,7 +5,7 @@ import "./Home.scss";
 
 function Home() {
   return (
-    <BasicLayout>
+    <BasicLayout className="home">
       <h2>HOME</h2>
     </BasicLayout>
   );

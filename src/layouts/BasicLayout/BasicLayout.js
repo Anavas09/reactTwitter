@@ -1,17 +1,28 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Col, Container, Row } from "react-bootstrap";
 
-function BasicLayout({ children }) {
+import "./BasicLayout.scss";
+import LeftMenu from "../../components/LeftMenu";
+
+function BasicLayout({ children, className }) {
   return (
-    <div>
-      <h2>MENU</h2>
-      {children}
-    </div>
+    <Container className={`basic-layout ${className}`}>
+      <Row>
+        <Col xs={3} className="basic-layout__menu">
+          <LeftMenu />
+        </Col>
+        <Col xs={9} className="basic-layout__content">
+          {children}
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
 BasicLayout.propTypes = {
   children: PropTypes.object.isRequired,
+  className: PropTypes.string.isRequired,
 }
 
 export default BasicLayout;

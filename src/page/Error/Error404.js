@@ -6,7 +6,7 @@ import "./Error404.scss";
 
 function Error404() {
   return (
-    <BasicLayout>
+    <BasicLayout className="error404">
       <h2>Error 404</h2>
     </BasicLayout>
   );
