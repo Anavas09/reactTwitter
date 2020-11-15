@@ -142,4 +142,4 @@ function isTokenExpired(token) {
   return false;
 }
 
-export { isUserLogged, signInApi, setTokenApi, signUpApi };
+export { getToken, isUserLogged, logout, signInApi, setTokenApi, signUpApi };
