@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import { Button, Spinner } from "react-bootstrap";
 import { toast } from "react-toastify";
 
-import useLogin from "../../hooks/useLogin";
+import BannerAvatar from "../../components/User/BannerAvatar";
 
 import BasicLayout from "../../layouts/BasicLayout";
 
@@ -24,15 +24,12 @@ function User(props) {
       .catch(() => toast.error("User not exist"));
   }, [userID]);
 
-  console.log(userData);
-
-  const { user } = useLogin();
   return (
     <BasicLayout className="user">
       <div className="user__title">
-        <h2>{`${user?.name} ${user?.lastname}`}</h2>
+        <h2>{userData ? `${userData.name} ${userData.lastname}` : "This user not exist"}</h2>
       </div>
-      <div className="user__banner">User Banner</div>
+      <BannerAvatar user={userData} />
       <div className="user__info">User Info</div>
       <div className="user__tweets">User tweets</div>
     </BasicLayout>

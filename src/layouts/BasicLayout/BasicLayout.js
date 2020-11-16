@@ -21,7 +21,7 @@ function BasicLayout({ children, className }) {
 }
 
 BasicLayout.propTypes = {
-  children: PropTypes.object.isRequired,
+  children: PropTypes.any.isRequired,
   className: PropTypes.string.isRequired,
 }
 
