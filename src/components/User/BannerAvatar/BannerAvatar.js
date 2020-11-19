@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import PropTypes from "prop-types";
 
@@ -9,8 +9,17 @@ import { API_HOST } from "../../../utils/constants";
 import AvatarNotFound from "../../../assets/png/avatar-not-found.png";
 
 import "./BannerAvatar.scss";
+import ConfigModal from "../../Modals/ConfigModal";
 
 function BannerAvatar({ user }) {
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
+
+  const openModal = content => {
+    setShowModal(true);
+    setModalContent(content);
+  };
+  
 
   const context = useLogin();
   const loggedUser = context.user;
@@ -34,10 +43,14 @@ function BannerAvatar({ user }) {
       />
       {user && (
         <div className="options">
-          {loggedUser._id === user.id && <Button>Edit profile</Button>}
+          {loggedUser._id === user.id && <Button onClick={() => setShowModal(true)}>Edit profile</Button>}
           {loggedUser._id !== user.id && <Button>Follow</Button>}
         </div>
       )}
+
+      <ConfigModal setShow={setShowModal} show={showModal} title="Edit Form">
+        Edit Form
+      </ConfigModal>
     </div>
   );
 }

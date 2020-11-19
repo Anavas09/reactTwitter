@@ -4,6 +4,7 @@ import { Button, Spinner } from "react-bootstrap";
 import { toast } from "react-toastify";
 
 import BannerAvatar from "../../components/User/BannerAvatar";
+import UserInfo from "../../components/User/UserInfo";
 
 import BasicLayout from "../../layouts/BasicLayout";
 
@@ -30,7 +31,7 @@ function User(props) {
         <h2>{userData ? `${userData.name} ${userData.lastname}` : "This user not exist"}</h2>
       </div>
       <BannerAvatar user={userData} />
-      <div className="user__info">User Info</div>
+      <UserInfo userinfo={userData}/>
       <div className="user__tweets">User tweets</div>
     </BasicLayout>
   );

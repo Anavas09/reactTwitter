@@ -1,0 +1,39 @@
+@import "../../../scss/index.scss";
+
+.config-modal{
+  .modal-content {
+    background-color: $background-gray-dark;
+    border-radius: 25px;
+    overflow: hidden;
+
+    .modal-header {
+      border-bottom: 1px solid $border-gray;
+      padding: 15px;
+
+      .modal-title {
+        align-items: center;
+        display: flex;
+
+        svg {
+          fill: $primary;
+          height: 15px;
+          margin-left: 10px;
+          margin-right: 20px;
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+
+        h2 {
+          font-size: 18px;
+          margin: 0;
+        }
+      }
+    }
+
+    .modal-body {
+      padding: 0;
+    }
+  }
+}

@@ -2,7 +2,7 @@ import React from "react";
 import { Modal } from "react-bootstrap";
 import PropTypes from "prop-types";
 
-import LogoWhite from "../../assets/png/logo-white.png";
+import LogoWhite from "../../../assets/png/logo-white.png";
 
 import "./BasicModal.scss";
 
