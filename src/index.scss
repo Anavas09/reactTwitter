@@ -51,3 +51,23 @@ input.form-control, textarea.form-control {
     box-shadow: none;
   }
 }
+
+.react-datepicker-wrapper {
+  height: 30px;
+  width: 100%;
+
+  .react-datepicker__input-container {
+    height: 100%;
+
+    input {
+      background-color: $background-dark-light;
+      border: 0;
+      border-bottom: 1px solid $border-gray;
+      border-radius: 0;
+      color: $font-light !important;
+      height: 100%;
+      padding: 0 12px;
+      width: 100%;
+    }
+  }
+}
