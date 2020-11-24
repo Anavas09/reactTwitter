@@ -21,7 +21,6 @@ function BannerAvatar({ user }) {
     setShowModal(true);
     setModalContent(content);
   };
-  
 
   const context = useLogin();
   const loggedUser = context.user;
@@ -53,7 +52,7 @@ function BannerAvatar({ user }) {
       )}
 
       <ConfigModal setShow={setShowModal} show={showModal} title="Edit Form">
-        <EditUserForm setShowModal={setShowModal} user={loggedUser} />
+        <EditUserForm setShowModal={setShowModal} user={user} />
       </ConfigModal>
     </div>
   );

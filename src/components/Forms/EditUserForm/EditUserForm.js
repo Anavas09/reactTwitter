@@ -1,18 +1,23 @@
 import React, { useCallback, useState } from "react";
 import PropTypes from "prop-types";
 import { Button, Col, Form, Row } from "react-bootstrap";
+import { toast } from "react-toastify";
 import DatePicker from "react-datepicker";
 import es from "date-fns/locale/es";
 import { useDropzone } from "react-dropzone";
 
+import { uploadBanner } from "../../../api/user";
+
 import setUserDataToEdit from "../../../utils/editFormData";
 import { API_HOST } from "../../../utils/constants";
+import { CameraIcon } from "../../../utils/icons";
 
 import AvatarNotFound from "../../../assets/png/avatar-not-found.png";
 
 import "./EditUserForm.scss";
 
 function EditUserForm({ setShowModal, user }) {
+  console.log(user);
   const [formData, setFormData] = useState(setUserDataToEdit(user));
   const [avatarUrl, setAvatarUrl] = useState(
     user?.avatar ? `${API_HOST}/getAvatar?id=${user.id}` : AvatarNotFound
@@ -20,12 +25,15 @@ function EditUserForm({ setShowModal, user }) {
   const [bannerUrl, setBannerUrl] = useState(
     user?.banner ? `${API_HOST}/getBanner?id=${user.id}` : null
   );
+  const [bannerFile, setBannerFile] = useState(null);
+  const [avatarFile, setAvatarFile] = useState(null);
 
-  const onDropBanner = useCallback(
-    accepedFile => {
-      console.log(accepedFile);
-    },[]
-  )
+  const onDropBanner = useCallback(acceptedFile => {
+    const file = acceptedFile[0];
+    setBannerUrl(URL.createObjectURL(file));
+    console.log(acceptedFile);
+    setBannerFile(file);
+  }, []);
 
   const {
     getRootProps: getRootBannerProps,
@@ -37,6 +45,23 @@ function EditUserForm({ setShowModal, user }) {
     onDrop: onDropBanner,
   });
 
+  const onDropAvatar = useCallback(acceptedFile => {
+    const file = acceptedFile[0];
+    setAvatarUrl(URL.createObjectURL(file));
+    console.log(acceptedFile);
+    setAvatarFile(file);
+  }, []);
+
+  const {
+    getRootProps: getRootAvatarProps,
+    getInputProps: getInputAvatarProps,
+  } = useDropzone({
+    accept: "image/jpeg, image/png",
+    noKeyboard: true,
+    multiple: false,
+    onDrop: onDropAvatar,
+  });
+
   const handleOnChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -45,6 +70,14 @@ function EditUserForm({ setShowModal, user }) {
     e.preventDefault();
     console.log("Editing user");
     console.log(formData);
+    console.log(bannerFile);
+    console.log(avatarFile);
+
+    if (bannerFile) {
+      uploadBanner(bannerFile).catch(() =>
+        toast.error("Error uploading the banner. Try again.")
+      );
+    }
   };
 
   return (
@@ -54,8 +87,19 @@ function EditUserForm({ setShowModal, user }) {
         style={{ backgroundImage: `url('${bannerUrl}')` }}
         {...getRootBannerProps()}
       >
+        <CameraIcon />
         <input {...getInputBannerProps()} />
       </div>
+
+      <div
+        className="avatar"
+        style={{ backgroundImage: `url('${avatarUrl}')` }}
+        {...getRootAvatarProps()}
+      >
+        <CameraIcon />
+        <input {...getInputAvatarProps()} />
+      </div>
+
       <Form onSubmit={handleOnSubmit}>
         <Form.Group>
           <Row>
