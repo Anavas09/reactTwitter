@@ -1,12 +1,12 @@
 import React, { useCallback, useState } from "react";
 import PropTypes from "prop-types";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, Col, Form, Row, Spinner } from "react-bootstrap";
 import { toast } from "react-toastify";
 import DatePicker from "react-datepicker";
 import es from "date-fns/locale/es";
 import { useDropzone } from "react-dropzone";
 
-import { uploadBanner } from "../../../api/user";
+import { updateUserInfo, uploadAvatar, uploadBanner } from "../../../api/user";
 
 import setUserDataToEdit from "../../../utils/editFormData";
 import { API_HOST } from "../../../utils/constants";
@@ -27,6 +27,7 @@ function EditUserForm({ setShowModal, user }) {
   );
   const [bannerFile, setBannerFile] = useState(null);
   const [avatarFile, setAvatarFile] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const onDropBanner = useCallback(acceptedFile => {
     const file = acceptedFile[0];
@@ -66,18 +67,41 @@ function EditUserForm({ setShowModal, user }) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleOnSubmit = e => {
+  const handleOnSubmit = async e => {
     e.preventDefault();
+
+    setLoading(true);
     console.log("Editing user");
     console.log(formData);
     console.log(bannerFile);
     console.log(avatarFile);
 
     if (bannerFile) {
-      uploadBanner(bannerFile).catch(() =>
-        toast.error("Error uploading the banner. Try again.")
-      );
+      await uploadBanner(bannerFile).catch(() => {
+        setLoading(false);
+        toast.error("Error uploading the banner. Try again.");
+      });
     }
+
+    if (avatarFile) {
+      await uploadAvatar(avatarFile).catch(() => {
+        setLoading(false);
+        toast.error("Error uploading the avatar. Try again.");
+      });
+    }
+
+    await updateUserInfo(formData)
+      .then(() => {
+        setShowModal(false);
+      })
+      .catch(() => {
+        setLoading(false);
+        toast.error("Error trying to update the user info. Try again.");
+      });
+
+    setLoading(false);
+
+    window.location.reload();
   };
 
   return (
@@ -154,7 +178,13 @@ function EditUserForm({ setShowModal, user }) {
         </Form.Group>
 
         <Button className="btn-submit" variant="primary" type="submit">
-          Update
+          {loading ? (
+            <>
+              <Spinner animation="border" size="sm" /> Updating
+            </>
+          ) : (
+            "Update"
+          )}
         </Button>
       </Form>
     </div>

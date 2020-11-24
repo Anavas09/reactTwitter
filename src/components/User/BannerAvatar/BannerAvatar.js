@@ -15,12 +15,6 @@ import "./BannerAvatar.scss";
 
 function BannerAvatar({ user }) {
   const [showModal, setShowModal] = useState(false);
-  const [modalContent, setModalContent] = useState(null);
-
-  const openModal = content => {
-    setShowModal(true);
-    setModalContent(content);
-  };
 
   const context = useLogin();
   const loggedUser = context.user;
