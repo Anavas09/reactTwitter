@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import { Button, Spinner } from "react-bootstrap";
 import { toast } from "react-toastify";
 
+import TweetsList from "../../components/TweetsList";
 import BannerAvatar from "../../components/User/BannerAvatar";
 import UserInfo from "../../components/User/UserInfo";
 
@@ -12,7 +13,6 @@ import { getUser } from "../../api/user";
 import { getTweets } from "../../api/tweet";
 
 import "./User.scss";
-import TweetsList from "../../components/TweetsList/TweetsList";
 
 function User(props) {
   const [userData, setUserData] = useState(null);
@@ -53,13 +53,10 @@ function User(props) {
           setLoadingTweets(0);
         } else {
           setTweets([...tweets, ...res]);
-          setPageNumber(pageNumber);
+          setPageNumber(pageTemp);
           setLoadingTweets(false);
         }
       })
-      .catch(() => {
-        setTweets([]);
-      });
   };
 
   return (
@@ -74,7 +71,7 @@ function User(props) {
       <BannerAvatar user={userData} />
       <UserInfo userinfo={userData} />
       <div className="user__tweets">
-        <h3>User tweets</h3>
+        <h3>Tweets</h3>
         {tweets && <TweetsList tweets={tweets} />}
         <Button onClick={moreTweets}>
           {!loadingTweets ? (

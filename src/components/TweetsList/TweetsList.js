@@ -17,7 +17,7 @@ function TweetsList({ tweets }) {
 }
 
 TweetsList.propTypes = {
-  tweets: PropTypes.array.isRequired,
+  tweets: PropTypes.arrayOf(PropTypes.object,).isRequired,
 };
 
 export default TweetsList;

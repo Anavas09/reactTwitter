@@ -81,4 +81,33 @@ function unfollowUser(userID) {
     });
 }
 
-export { checkFollow, followUser, unfollowUser }
+/**
+ * Get a users list from the database
+ * @param {string} urlParams Params to build the URL. (page, type and search)
+ */
+function getFollow(urlParams) {
+  const url = `${API_HOST}/listUsers?${urlParams}`;
+  const token = getToken();
+
+  //If the request is a GET type, isn't necessary write "method: GET"
+  const params = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  return fetch(url, params)
+    .then(response => {
+      return response.json();
+    })
+    .then(result => {
+      return result;
+    })
+    .catch(err => {
+      return err;
+    });
+}
+
+
+export { checkFollow, getFollow, followUser, unfollowUser }
