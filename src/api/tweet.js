@@ -26,7 +26,7 @@ function addTweet(message) {
   return fetch(url, params)
     .then(response => {
       if (response.status >= 200 && response.status < 300) {
-        return { code: response.status, message: "Tweet sended." };
+        return { code: response.status, message: "Tweet sent." };
       }
       return { code: 500, message: "Server error." };
     })
@@ -35,4 +35,30 @@ function addTweet(message) {
     });
 }
 
-export { addTweet };
+/**
+ * Get the tweets from the database
+ * @param {string} userID ID from the user who want to read the tweets
+ * @param {number} pag Page number for pagination effect
+ */
+function getTweets(userID, pag) {
+  const url = `${API_HOST}/readTweets?id=${userID}&pag=${pag}`;
+  const token = getToken();
+
+  //If the request is a GET type, isn't necessary write "method: GET"
+  const params = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  return fetch(url, params)
+    .then(response => {
+      return response.json();
+    })
+    .catch(err => {
+      return err;
+    });
+}
+
+export { addTweet, getTweets };

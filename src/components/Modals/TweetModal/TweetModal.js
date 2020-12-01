@@ -24,6 +24,7 @@ function TweetModal({ show, setShow }) {
             setMessage("");
             setShow(false);
             console.log("Submiting");
+            window.location.reload();
           } else {
             toast.error(response.message);
           }
