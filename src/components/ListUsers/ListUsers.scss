@@ -1,0 +1,10 @@
+@import "../../scss/index.scss";
+
+.list-users{
+  &__not-users{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+  }
+}

@@ -1,21 +1,36 @@
 import React, { useEffect, useState } from "react";
+import queryString from "query-string";
 import { Button, ButtonGroup, Spinner } from "react-bootstrap";
+import { withRouter } from "react-router-dom";
+import { isEmpty } from "lodash";
 
 import BasicLayout from "../../layouts/BasicLayout";
+import ListUsers from "../../components/ListUsers";
 
 import useLogin from "../../hooks/useLogin";
+import useUsersQuery from "../../hooks/useUsersQuery";
 
 import { getFollow } from "../../api/follow";
 
 import "./Users.scss";
 
-function Users() {
+function Users({ location }) {
   const [users, setUsers] = useState(null);
 
+  const params = useUsersQuery(location);
+  console.log(params);
+
+  const urlParams = queryString.stringify(params);
+  console.log(urlParams);
+
   useEffect(() => {
-    getFollow("page=1&type=new&search=")
+    getFollow(urlParams)
       .then(response => {
-        console.log(response);
+        if (isEmpty(response)) {
+          setUsers([]);
+        } else {
+          setUsers(response);
+        }
       })
       .catch(() => {
         setUsers([]);
@@ -35,8 +50,17 @@ function Users() {
         <Button>Following</Button>
         <Button>New</Button>
       </ButtonGroup>
+
+      {!users ? (
+        <div className="users__loading">
+          <Spinner animation="border" variant="info" />
+          Searching...
+        </div>
+      ) : (
+        <ListUsers users={users} />
+      )}
     </BasicLayout>
   );
 }
 
-export default Users;
+export default withRouter(Users);

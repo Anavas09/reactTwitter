@@ -47,4 +47,16 @@
       }
     }
   }
+
+  &__loading {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 50px;
+
+    > div {
+      margin-bottom: 10px;
+    }
+  }
 }
