@@ -9,7 +9,7 @@ const useUsersQuery = location => {
   //We know what query paramas we need.
   //So just grab them and give a default value.
   //search param can be empty.
-  const { page = 1, search, type = "follow" } = queryString.parse(
+  const { page = 1, search, type = "new" } = queryString.parse(
     location.search
   );
 

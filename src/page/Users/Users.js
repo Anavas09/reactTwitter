@@ -3,6 +3,7 @@ import queryString from "query-string";
 import { Button, ButtonGroup, Spinner } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import { isEmpty } from "lodash";
+import { useDebouncedCallback } from "use-debounce";
 
 import BasicLayout from "../../layouts/BasicLayout";
 import ListUsers from "../../components/ListUsers";
@@ -14,14 +15,25 @@ import { getFollow } from "../../api/follow";
 
 import "./Users.scss";
 
-function Users({ location }) {
+function Users({ history, location }) {
   const [users, setUsers] = useState(null);
+  const [btnLoading, setBtnLoading] = useState(false);
 
   const params = useUsersQuery(location);
   console.log(params);
+  const [typeUser, setTypeUser] = useState(params.type || "follow");
 
   const urlParams = queryString.stringify(params);
   console.log(urlParams);
+
+  const onSearch = useDebouncedCallback(value => {
+    setUsers(null);
+    history.push({
+      search: queryString.stringify({ ...params, page: 1, search: value }),
+    });
+  }, 200);
+
+  const { setRefreshCheckLogin } = useLogin();
 
   useEffect(() => {
     getFollow(urlParams)
@@ -35,20 +47,53 @@ function Users({ location }) {
       .catch(() => {
         setUsers([]);
       });
-  }, []);
+  }, [urlParams]);
 
-  const { setRefreshCheckLogin } = useLogin();
+  const onChangeType = type => {
+    if (type === "new") {
+      setTypeUser("new");
+    } else {
+      setTypeUser("follow");
+    }
+
+    history.push({
+      search: queryString.stringify({
+        type: type,
+        page: 1,
+        search: "",
+      }),
+    });
+  };
+
+  const moreUsers = () => {
+    setBtnLoading(true);
+    const newTemp = params.page + 1;
+  };
 
   return (
     <BasicLayout className="users">
       <div className="users__title">
         <h2>Users...!</h2>
-        <input type="text" placeholder="Search users" />
+        <input
+          type="text"
+          placeholder="Search users"
+          onChange={e => onSearch.callback(e.target.value)}
+        />
       </div>
 
       <ButtonGroup className="users__options">
-        <Button>Following</Button>
-        <Button>New</Button>
+        <Button
+          className={typeUser === "follow" && "active"}
+          onClick={() => onChangeType("follow")}
+        >
+          Following
+        </Button>
+        <Button
+          className={typeUser === "new" && "active"}
+          onClick={() => onChangeType("new")}
+        >
+          New
+        </Button>
       </ButtonGroup>
 
       {!users ? (
@@ -57,7 +102,22 @@ function Users({ location }) {
           Searching...
         </div>
       ) : (
-        <ListUsers users={users} />
+        <>
+          <ListUsers users={users} />
+          <Button onClick={moreUsers} className="load-more">
+            {!btnLoading ? (
+              btnLoading !== 0 && "More users"
+            ) : (
+              <Spinner
+                as="span"
+                animation="grow"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+            )}
+          </Button>
+        </>
       )}
     </BasicLayout>
   );

@@ -1,10 +1,24 @@
 @import "../../scss/index.scss";
 
-.list-users{
-  &__not-users{
+.list-users {
+  padding: 0;
+
+  &__not-users {
     align-items: center;
     display: flex;
     justify-content: center;
     margin-top: 50px;
+  }
+
+  &__user {
+    border-bottom: 1px solid $border-gray;
+    color: $font-light;
+    padding: 15px 30px;
+
+    &:hover {
+      background-color: $background-dark-light;
+      color: $font-light;
+      text-decoration: none;
+    }
   }
 }

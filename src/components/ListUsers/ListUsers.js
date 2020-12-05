@@ -2,8 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { isEmpty, map } from "lodash";
 
+import UserInfo from "./UserInfo";
+
 import "./ListUsers.scss";
-import UserDetails from "./UserInfo";
 
 function ListUsers({ users }) {
 
@@ -13,9 +14,9 @@ function ListUsers({ users }) {
   }
 
   return (
-    <ul>
+    <ul className="list-users">
       {map(users, user => {
-        return <UserDetails key={user.id} user={user} />;
+        return <UserInfo key={user.id} user={user} />;
       })}
     </ul>
   );
@@ -24,7 +25,7 @@ function ListUsers({ users }) {
 ListUsers.propTypes = {
   users: PropTypes.arrayOf(
     PropTypes.shape({
-      avatar: PropTypes.string,
+      id: PropTypes.string,
       name: PropTypes.string,
       lastname: PropTypes.string,
     })
