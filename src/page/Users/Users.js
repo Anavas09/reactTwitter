@@ -38,16 +38,25 @@ function Users({ history, location }) {
   useEffect(() => {
     getFollow(urlParams)
       .then(response => {
-        if (isEmpty(response)) {
-          setUsers([]);
+        if (parseInt(params.page) === 1) {
+          if (isEmpty(response)) {
+            setUsers([]);
+          } else {
+            setUsers(response);
+          }
         } else {
-          setUsers(response);
+          if (!response) {
+            setBtnLoading(0);
+          } else {
+            setUsers([...users, ...response]);
+            setBtnLoading(false);
+          }
         }
       })
       .catch(() => {
         setUsers([]);
       });
-  }, [urlParams]);
+  }, [params.page, urlParams, users]);
 
   const onChangeType = type => {
     if (type === "new") {
@@ -67,7 +76,11 @@ function Users({ history, location }) {
 
   const moreUsers = () => {
     setBtnLoading(true);
-    const newTemp = params.page + 1;
+    const pageTemp = parseInt(params.page) + 1;
+
+    history.push({
+      search: queryString.stringify({ ...params, page: pageTemp }),
+    });
   };
 
   return (
@@ -104,19 +117,22 @@ function Users({ history, location }) {
       ) : (
         <>
           <ListUsers users={users} />
-          <Button onClick={moreUsers} className="load-more">
-            {!btnLoading ? (
-              btnLoading !== 0 && "More users"
-            ) : (
-              <Spinner
-                as="span"
-                animation="grow"
-                size="sm"
-                role="status"
-                aria-hidden="true"
-              />
-            )}
-          </Button>
+
+          {!isEmpty(users) && (
+            <Button onClick={moreUsers} className="load-more">
+              {!btnLoading ? (
+                btnLoading !== 0 && "More users"
+              ) : (
+                <Spinner
+                  as="span"
+                  animation="grow"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />
+              )}
+            </Button>
+          )}
         </>
       )}
     </BasicLayout>

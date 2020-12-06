@@ -6,7 +6,11 @@ import "./Home.scss";
 function Home() {
   return (
     <BasicLayout className="home">
-      <h2>HOME</h2>
+      <div className="home__title">
+        <h2>Home</h2>
+      </div>
+      <p>Tweets</p>
+      <p>More tweets</p>
     </BasicLayout>
   );
 }
