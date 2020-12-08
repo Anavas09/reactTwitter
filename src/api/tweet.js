@@ -61,4 +61,30 @@ function getTweets(userID, pag) {
     });
 }
 
-export { addTweet, getTweets };
+/**
+ * Get followers tweets from the database
+ * @param {number} pag Page number for pagination effect
+ */
+function getTweetsFollowers(pag = 1) {
+  const url = `${API_HOST}/readTweetsFollowers?pag=${pag}`;
+  const token = getToken();
+
+  //If the request is a GET type, isn't necessary write "method: GET"
+  const params = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  return fetch(url, params)
+    .then(response => {
+      return response.json();
+    })
+    .catch(err => {
+      return err;
+    });
+  
+}
+
+export { addTweet, getTweets, getTweetsFollowers };

@@ -1,6 +1,6 @@
 @import "../../scss/index.scss";
 
-.home{
+.home {
   &__title {
     border-bottom: 1px solid $border-gray;
     padding: 15px;
@@ -9,6 +9,21 @@
       font-size: 22px;
       font-weight: bold;
       margin-bottom: 0;
+    }
+  }
+
+  .load-more.btn.btn-primary {
+    border: 0;
+    background-color: transparent;
+    display: flex;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    margin-top: 10px;
+
+    &:hover,
+    &:focus {
+      background-color: transparent !important;
+      color: $primary;
     }
   }
 }
